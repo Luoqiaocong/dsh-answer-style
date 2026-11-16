@@ -2,7 +2,7 @@
 
 [English](README.en.md) | 中文
 
-给 **DeepSeek Harness（DSH）** 的模型回答单独换排版：**字体 / 整体粗细 / 加粗文字颜色**，只改「模型说的话」，随时一键恢复默认。
+给 **DeepSeek Harness（DSH）** 的模型回答单独换排版：**字体 / 正文与标题字重 / 文字颜色（可选上色范围）**，只改「模型说的话」，随时一键恢复默认。
 
 > 你的消息、工具行、输入框和侧边栏完全不受影响。颜色只施加在 `**加粗**` 片段上，正文继续跟随主题色。
 
@@ -33,7 +33,7 @@
 | 字体 | 分组预设：中文系统字体（微软雅黑 / 苹方 / 宋体 / 楷体 / 黑体）、西文系统字体（Segoe UI / Helvetica / Arial / Georgia / Times）、等宽（Consolas / Menlo / Courier）、以及标注为「需自行安装」的开源字体（思源黑体 / 霞鹜文楷 / JetBrains Mono）；也可「读取本机字体」枚举电脑上已装的全部字体，或「自定义…」直接写 `font-family` 列表 |
 | 正文粗细 | 默认（跟随主题）/ 300 / 400 / 500 / 600 / 700，只作用于正文块 |
 | 标题字重 | 默认（跟随主题）/ 400 / 500 / 600 / 700，单独控制 h1–h6 |
-| 文字颜色 | 取色器 + 8 个预设色；下方三个勾选决定上色范围——`**加粗**` 片段 / 标题 h1–h6 / 表头，默认全开，普通正文始终保持主题色 |
+| 文字颜色 | 预设色块、系统取色器或直接填 `#1d4ed8` / `rgb(…)`；三个胶囊按钮决定上色范围——`**加粗**` 片段 / 标题 h1–h6 / 表头，默认全开，普通正文始终保持主题色 |
 | 恢复默认 | 清空全部偏好并移除注入的样式，等价于从未设置过 |
 
 - **作用范围**：聊天记录里模型回答的正文，含回答中的思考过程、列表、表格与标题
@@ -83,7 +83,7 @@ dsh plugin --profile desktop add dsh-answer-style
 ## 使用
 
 1. 打开 **设置 → 回答字体**
-2. 选字体（或点「读取本机字体」）；按需要调整整体粗细；给加粗片段挑个颜色，例如蓝色 `#1d4ed8`
+2. 选字体（或点「读取本机字体」）；分别调整正文与标题的字重；给需要强调的部分挑个颜色，例如蓝色 `#1d4ed8`
 3. 想回到原样，点 **恢复默认**；单项还原用「跟随主题」/「默认」即可
 
 ## 兼容性
@@ -108,14 +108,19 @@ dsh plugin --profile desktop add dsh-answer-style
   font-family: "霞鹜文楷", "LXGW WenKai", serif !important;
 }
 
-/* 整体粗细 */
+/* 正文粗细 */
 [data-chat-flow-kind="assistant-step"] [class*="_markdown_"],
 [data-chat-flow-kind="assistant-step"] :is(p, li, blockquote, dd, dt, figcaption, th, td) {
   font-weight: 700 !important;
 }
 
-/* 只有加粗片段上色，正文不动 */
-[data-chat-flow-kind="assistant-step"] :is(strong, b) {
+/* 标题字重（独立一档） */
+[data-chat-flow-kind="assistant-step"] :is(h1, h2, h3, h4, h5, h6) {
+  font-weight: 500 !important;
+}
+
+/* 只给勾选的范围上色（示例：加粗片段 + 表头，标题不参与） */
+[data-chat-flow-kind="assistant-step"] :is(strong, b, th) {
   color: #1d4ed8 !important;
 }
 ```
@@ -132,8 +137,10 @@ Host 半部（`lib/index.js`）提供两条能力：注册 `settings.section` �
 {
   "enabled": true,
   "family": "\"LXGW WenKai\", serif",
-  "weight": "700",
-  "color": "#1d4ed8"
+  "weight": "default",
+  "headingWeight": "500",
+  "color": "#1d4ed8",
+  "colorScope": { "strong": true, "headings": false, "headers": true }
 }
 ```
 
@@ -147,7 +154,7 @@ Host 半部（`lib/index.js`）提供两条能力：注册 `settings.section` �
 npm run check   # node --check + scripts/smoke.mjs
 ```
 
-`scripts/smoke.mjs` 用最小的 `window` / `document` / `react` 桩加载浏览器 bundle，断言注入的 CSS 选择器、颜色只命中加粗片段、偏好持久化与恢复默认。
+`scripts/smoke.mjs` 用最小的 `window` / `document` / `react` 桩加载浏览器 bundle，断言注入的 CSS 选择器、颜色只命中勾选的范围、标题字重独立成条、偏好持久化与恢复默认。
 
 浏览器 bundle 遵循 DSH 的模块加载器约定：
 
@@ -175,7 +182,7 @@ window.__ModuleLoader__.load({ id: 'dsh-answer-style', factory: (require) => { /
 ## 安全
 
 - 自定义字体名会做清洗（去掉引号、尖括号、花括号与控制字符），颜色只接受 hex / `rgb()` / `rgba()`，不会把任意 CSS 注入页面；
-- 不读取、不发送任何对话内容，只把你自己的字体与颜色偏好存在本地 `localStorage`。
+- 不读取、不发送任何对话内容；只有字体与颜色偏好写在本机 Host 的 `~/.dsh/answer-style.json`。
 
 ## 限制
 

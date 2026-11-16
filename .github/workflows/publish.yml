@@ -1,0 +1,27 @@
+name: publish
+
+# Trusted Publishing: this workflow authenticates to npm with the GitHub OIDC
+# token, so the repository needs no NPM_TOKEN secret. Enable it once at
+# npmjs.com → package → Settings → Trusted publishing, with:
+#   owner: Luoqiaocong · repository: dsh-answer-style · workflow: publish.yml
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Verify the bundle
+        run: npm run check
+      - name: Publish to npm
+        run: npm publish --provenance --access public

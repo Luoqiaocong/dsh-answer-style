@@ -2,7 +2,7 @@
 
 [中文](README.md) | English
 
-Restyle **only the model's answers** in DeepSeek Harness (DSH): **font family / overall weight / bold-text color**, with a one-click reset.
+Restyle **only the model's answers** in DeepSeek Harness (DSH): **font family / body and heading weight / text color with an optional scope**, with a one-click reset.
 
 > Your own messages, tool rows, the composer and the sidebar keep the theme. The color applies to `**bold**` runs only — body text stays the theme color.
 
@@ -33,7 +33,7 @@ Interface-wide font settings also restyle the sidebar, buttons and composer. If 
 | Font | Grouped presets: Chinese system fonts (Microsoft YaHei / PingFang / SimSun / KaiTi / SimHei), Latin system fonts (Segoe UI / Helvetica / Arial / Georgia / Times), monospace (Consolas / Menlo / Courier), and an explicitly labelled “install-it-yourself” group (Source Han Sans / LXGW WenKai / JetBrains Mono) · **Load installed fonts** · or type a custom `font-family` list |
 | Body weight | Default (theme) / 300 / 400 / 500 / 600 / 700, body blocks only |
 | Heading weight | Default (theme) / 400 / 500 / 600 / 700, h1–h6 on its own |
-| Text color | Color picker + 8 presets, plus three scope checkboxes — `**bold**` runs, headings h1–h6, table headers (all on by default). Body text always keeps the theme color |
+| Text color | Preset swatches, the native color picker, or a typed `#1d4ed8` / `rgb(…)`; three chips choose the scope — `**bold**` runs, headings h1–h6, table headers (all on by default). Body text always keeps the theme color |
 | Reset | Clears every preference and removes the injected stylesheet |
 
 - **Scope:** the assistant body of chat rows, including reasoning text, lists, tables and headings
@@ -94,8 +94,13 @@ The client half registers the `settings.section` slot and rebuilds a single styl
   font-family: "LXGW WenKai", serif !important;
 }
 
-/* bold runs only — body text untouched */
-[data-chat-flow-kind="assistant-step"] :is(strong, b) {
+/* heading weight, independent from the body */
+[data-chat-flow-kind="assistant-step"] :is(h1, h2, h3, h4, h5, h6) {
+  font-weight: 500 !important;
+}
+
+/* only the selected scope is colored (here: bold runs + table headers) */
+[data-chat-flow-kind="assistant-step"] :is(strong, b, th) {
   color: #1d4ed8 !important;
 }
 ```
@@ -127,7 +132,7 @@ Exporting `name` / `inject` / `apply(ctx)` is the standard Cordis client plugin 
 
 - Assistant answers only; the rest of the UI keeps the theme.
 - Fonts must already be installed locally;
-- Preferences live in `~/.dsh/answer-style.json`; deleting that file restores the defaults;
+- Preferences live in `~/.dsh/answer-style.json` on the Host; deleting that file restores the defaults;
 - If DSH later changes the `data-chat-flow-kind="assistant-step"` anchor or the `_markdown_` CSS-module naming, `sheetText()` in `lib/client.js` needs a matching tweak.
 
 ## License
