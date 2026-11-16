@@ -30,9 +30,10 @@ Interface-wide font settings also restyle the sidebar, buttons and composer. If 
 | Setting | What it does |
 | --- | --- |
 | Enable | Master switch; turning it off restores the theme instantly and keeps your preferences |
-| Font | Curated stacks (Microsoft YaHei, PingFang, Source Han Sans, LXGW WenKai, KaiTi, SimSun, DengXian, monospace, serif) · **Load installed fonts** via the Local Font Access API · or type a custom `font-family` list |
-| Overall weight | Default (theme) / 300 / 400 / 500 / 600 / 700. Headings and `**bold**` keep their own weight |
-| Bold text color | Colors every bold-looking run — `**bold**`, headings h1–h6 and table headers — while body text keeps the theme color. Color picker + 8 presets, “Follow theme” resets |
+| Font | Grouped presets: Chinese system fonts (Microsoft YaHei / PingFang / SimSun / KaiTi / SimHei), Latin system fonts (Segoe UI / Helvetica / Arial / Georgia / Times), monospace (Consolas / Menlo / Courier), and an explicitly labelled “install-it-yourself” group (Source Han Sans / LXGW WenKai / JetBrains Mono) · **Load installed fonts** · or type a custom `font-family` list |
+| Body weight | Default (theme) / 300 / 400 / 500 / 600 / 700, body blocks only |
+| Heading weight | Default (theme) / 400 / 500 / 600 / 700, h1–h6 on its own |
+| Text color | Color picker + 8 presets, plus three scope checkboxes — `**bold**` runs, headings h1–h6, table headers (all on by default). Body text always keeps the theme color |
 | Reset | Clears every preference and removes the injected stylesheet |
 
 - **Scope:** the assistant body of chat rows, including reasoning text, lists, tables and headings

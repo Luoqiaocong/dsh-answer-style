@@ -4,6 +4,30 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.3] - 2026-11-16
+
+### Added
+
+- **Heading weight** (`headingWeight`): h1–h6 can follow the theme or take
+  400/500/600/700 independently from the body weight.
+- **Color scope** (`colorScope`): the text color applies only to the runs you
+  tick — `**bold**`, headings, table headers. All three are on by default, so
+  existing preferences keep their look.
+
+### Changed
+
+- The settings panel is regrouped into 字体 / 粗细 / 颜色 / 预览 blocks separated
+  by hairlines; the body and heading weights sit side by side and “恢复默认”
+  lives in the header next to the on/off switch.
+- Preset fonts are grouped by availability: system Chinese and Latin fonts
+  first, then monospace, then an explicitly labelled group of open-source fonts
+  that need to be installed.
+- Any color can be set: preset swatches, the native color picker, or a typed
+  hex / `rgb()` value.
+- The preview is one block — heading first, then body — so both samples read
+  like a real answer.
+- The persistence status only appears while saving or after a failure.
+
 ## [0.2.2] - 2026-11-16
 
 ### Changed

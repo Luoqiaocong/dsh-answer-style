@@ -140,6 +140,21 @@ assert.equal(
 face.update({ family: 'a}</style><script>alert(1)</script>, serif' })
 assert.doesNotMatch(document.getElementById(SHEET_ID).textContent, /<script/, 'CSS injection must be sanitized')
 
+// Heading weight is its own axis.
+face.update({ headingWeight: '500' })
+assert.match(
+  document.getElementById(SHEET_ID).textContent,
+  /\[data-chat-flow-kind="assistant-step"\] :is\(h1, h2, h3, h4, h5, h6\) \{ font-weight: 500 !important; \}/,
+  'heading weight must be a separate rule',
+)
+
+// Unchecking “headings” takes headings out of the color rule only.
+face.update({ colorScope: { headings: false } })
+const scoped = document.getElementById(SHEET_ID).textContent
+assert.match(scoped, /:is\(strong, b, th\) \{ color: #1d4ed8 !important; \}/, 'color must skip headings')
+assert.doesNotMatch(scoped, /strong, b, h1/, 'headings must be gone from the color target list')
+face.update({ colorScope: { headings: true } })
+
 face.update({ enabled: false })
 assert.equal(document.getElementById(SHEET_ID), null, 'disabling must remove the stylesheet')
 face.update({ enabled: true })
@@ -148,6 +163,13 @@ assert.ok(document.getElementById(SHEET_ID), 'enabling must reinstall the styles
 face.reset()
 assert.equal(document.getElementById(SHEET_ID), null, 'reset must remove the stylesheet')
 assert.equal(localStorage.getItem(STORAGE_KEY), null, 'reset must clear the stored preference')
-assert.deepEqual(face.get(), { enabled: true, family: '', weight: 'default', color: '' })
+assert.deepEqual(face.get(), {
+  enabled: true,
+  family: '',
+  weight: 'default',
+  headingWeight: 'default',
+  color: '',
+  colorScope: { strong: true, headings: true, headers: true },
+})
 
 console.log('smoke: ok')
