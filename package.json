@@ -14,14 +14,14 @@
     "chat"
   ],
   "license": "MIT",
-  "author": "luoqiaocong",
-  "homepage": "https://github.com/luoqiaocong/dsh-answer-style#readme",
+  "author": "Luoqiaocong",
+  "homepage": "https://github.com/Luoqiaocong/dsh-answer-style#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/luoqiaocong/dsh-answer-style.git"
+    "url": "git+https://github.com/Luoqiaocong/dsh-answer-style.git"
   },
   "bugs": {
-    "url": "https://github.com/luoqiaocong/dsh-answer-style/issues"
+    "url": "https://github.com/Luoqiaocong/dsh-answer-style/issues"
   },
   "main": "lib/index.js",
   "exports": {
@@ -43,7 +43,8 @@
     "smoke": "node scripts/smoke.mjs"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "dsh": {
     "engines": {

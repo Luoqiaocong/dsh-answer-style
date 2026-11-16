@@ -6,21 +6,14 @@ All notable changes to this project are documented here. The format follows
 
 ## [0.2.0] - 2026-11-16
 
-### Changed
-
-- **Bold text color instead of body color**: the color setting now paints only
-  `**bold**` runs (`strong, b`) inside assistant answers. Body text keeps the
-  theme color, so a blue bold run no longer turns an entire answer blue.
-- The settings row is renamed from “字体颜色” to “加粗文字颜色”, and the preview
-  line shows one bold sample in the chosen color.
-
-## [0.1.0] - 2026-11-16
-
 ### Added
 
-- First release: a `settings.section` page (“回答字体”) that styles the assistant
-  rows only — font family (presets, installed-font enumeration, custom list),
-  overall weight, body color, and a reset-to-default action.
-- Persistence in `localStorage` (`dsh-answer-style/v1`) with cross-tab sync.
-- Input sanitation for font lists and colors; the injected rules are removed
-  when the preference is reset or the plugin unloads.
+- Settings page **回答字体** (`settings.section`) that styles assistant answers only:
+  - font family — curated stacks, installed-font enumeration via the Local Font Access API, or a custom `font-family` list;
+  - overall weight — default, 300, 400, 500, 600, 700;
+  - **bold text color** — colors only `**bold**` runs (`strong, b`), body text keeps the theme color;
+  - reset to default, which removes the injected stylesheet.
+- Live preview row, immediate application and cross-tab sync.
+- Preferences persisted in `localStorage` (`dsh-answer-style/v1`).
+- Input sanitation for font lists and colors; the injected rules are removed when
+  the preference is reset or the plugin unloads.
