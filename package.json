@@ -1,0 +1,60 @@
+{
+  "name": "dsh-answer-style",
+  "version": "0.2.0",
+  "type": "module",
+  "description": "DSH Web 插件：只改模型回答的字体、整体粗细与加粗文字颜色，可一键恢复默认",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "web-ui",
+    "font",
+    "typography",
+    "markdown",
+    "chat"
+  ],
+  "license": "MIT",
+  "author": "luoqiaocong",
+  "homepage": "https://github.com/luoqiaocong/dsh-answer-style#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luoqiaocong/dsh-answer-style.git"
+  },
+  "bugs": {
+    "url": "https://github.com/luoqiaocong/dsh-answer-style/issues"
+  },
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "scripts",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "check": "node --check lib/client.js && node --check lib/index.js && node scripts/smoke.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dsh": {
+    "engines": {
+      "dsh": ">=0.2.2-rc.1"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web"
+    }
+  }
+}

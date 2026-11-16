@@ -1,0 +1,4 @@
+# 回答字体插件：向 Web 插件表插入一行，客户端半部由 dsh.client 声明自动加载。
+- insert:
+    - id: answer-style
+      name: dsh-answer-style
