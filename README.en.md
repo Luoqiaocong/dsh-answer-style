@@ -32,12 +32,12 @@ Interface-wide font settings also restyle the sidebar, buttons and composer. If 
 | Enable | Master switch; turning it off restores the theme instantly and keeps your preferences |
 | Font | Curated stacks (Microsoft YaHei, PingFang, Source Han Sans, LXGW WenKai, KaiTi, SimSun, DengXian, monospace, serif) · **Load installed fonts** via the Local Font Access API · or type a custom `font-family` list |
 | Overall weight | Default (theme) / 300 / 400 / 500 / 600 / 700. Headings and `**bold**` keep their own weight |
-| Bold text color | Colors **only** `**bold**` runs; body text keeps the theme color. Color picker + 8 presets, “Follow theme” resets |
+| Bold text color | Colors every bold-looking run — `**bold**`, headings h1–h6 and table headers — while body text keeps the theme color. Color picker + 8 presets, “Follow theme” resets |
 | Reset | Clears every preference and removes the injected stylesheet |
 
 - **Scope:** the assistant body of chat rows, including reasoning text, lists, tables and headings
 - **Live:** changes apply immediately, with a preview row at the bottom of the panel
-- **Persisted:** per browser in `localStorage` (`dsh-answer-style/v1`)
+- **Persisted:** in the Host file `~/.dsh/answer-style.json` (`$DSH_HOME` wins), shared by every browser and by DSH Desktop; `localStorage` is only a first-paint cache
 - **Lightweight:** zero runtime dependencies, no build step, no bundled fonts, no network, no telemetry
 
 ## Install
@@ -126,7 +126,7 @@ Exporting `name` / `inject` / `apply(ctx)` is the standard Cordis client plugin 
 
 - Assistant answers only; the rest of the UI keeps the theme.
 - Fonts must already be installed locally;
-- Preferences are per browser;
+- Preferences live in `~/.dsh/answer-style.json`; deleting that file restores the defaults;
 - If DSH later changes the `data-chat-flow-kind="assistant-step"` anchor or the `_markdown_` CSS-module naming, `sheetText()` in `lib/client.js` needs a matching tweak.
 
 ## License

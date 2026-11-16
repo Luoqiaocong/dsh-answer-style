@@ -73,6 +73,9 @@ const window = {
   removeEventListener: () => {},
 }
 
+// The browser half talks to its Host route; this smoke test has no Host.
+globalThis.fetch = async () => ({ ok: false, json: async () => ({}) })
+
 const source = readFileSync(bundlePath, 'utf8')
 new Function('window', 'document', 'console', source)(window, document, console)
 
@@ -124,8 +127,8 @@ assert.match(sheet.textContent, /font-family: "LXGW WenKai", "Microsoft YaHei" !
 assert.match(sheet.textContent, /font-weight: 700 !important;/)
 assert.match(
   sheet.textContent,
-  /\[data-chat-flow-kind="assistant-step"\] :is\(strong, b\) \{ color: #1d4ed8 !important; \}/,
-  'the color rule must be scoped to bold runs',
+  /\[data-chat-flow-kind="assistant-step"\] :is\(strong, b, h1, h2, h3, h4, h5, h6, th\) \{ color: #1d4ed8 !important; \}/,
+  'the color rule must cover bold runs, headings and table headers',
 )
 assert.doesNotMatch(sheet.textContent, /p, li[^}]*color:/, 'body text must keep the theme color')
 assert.equal(

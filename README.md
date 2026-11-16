@@ -32,13 +32,13 @@
 | 启用 | 总开关。关掉立即恢复主题原样，偏好保留 |
 | 字体 | 内置常用字体栈：微软雅黑 / 苹方 / 思源黑体 / 霞鹜文楷 / 楷体 / 宋体 / 等线 / 等宽 / 西文衬线；也可「读取本机字体」枚举电脑上已装的所有字体，或「自定义…」直接写 `font-family` 列表 |
 | 整体粗细 | 默认（跟随主题）/ 300 / 400 / 500 / 600 / 700。标题和行内 `**加粗**` 保留自己的字重 |
-| 加粗文字颜色 | 只给回答里 `**加粗**` 的部分上色，正文保持主题色；取色器 + 8 个预设色，选「跟随主题」即可还原 |
+| 加粗文字颜色 | 给回答里所有“粗的”部分上色：`**加粗**`、标题 h1–h6、表头；普通正文保持主题色。取色器 + 8 个预设色，选「跟随主题」即可还原 |
 | 恢复默认 | 清空全部偏好并移除注入的样式，等价于从未设置过 |
 
 - **作用范围**：聊天记录里模型回答的正文，含回答中的思考过程、列表、表格与标题
 - **不影响**：你的消息、工具行、输入框、侧边栏及其他界面控件
 - **即时生效**：设置面板背后的对话会同步变化，面板底部有实时预览
-- **持久化**：偏好存在浏览器 `localStorage`（键 `dsh-answer-style/v1`），刷新、重启后保留
+- **持久化**：偏好写在 Host 的 `~/.dsh/answer-style.json`（设置了 `$DSH_HOME` 就用它），**所有浏览器与桌面端共用**；`localStorage` 只作首屏缓存与离线兜底
 - **轻量**：零运行时依赖、零构建、不打包字体、不联网、不采集数据
 
 ## 安装
@@ -124,7 +124,19 @@ dsh plugin --profile desktop add dsh-answer-style
 - 代码块与行内代码有自己的等宽字体和颜色声明，不会被覆盖；
 - **恢复默认 = 移除这个 `<style>`**，不留任何残留。
 
-Host 半部（`lib/index.js`）是空插件，只用于让 loader 行在 Host 侧成立，功能全部在浏览器端。
+Host 半部（`lib/index.js`）提供两条能力：注册 `settings.section` 槽位所需的 loader 行，以及一个配置路由 `GET/PUT /answer-style/config`（不用 `/plugins/...`，那是客户端 bundle 专用前缀）。它读写：
+
+```
+~/.dsh/answer-style.json     # $DSH_HOME 优先
+{
+  "enabled": true,
+  "family": "\"LXGW WenKai\", serif",
+  "weight": "700",
+  "color": "#1d4ed8"
+}
+```
+
+浏览器半部启动时拉一次、每次修改后再写回，所以换浏览器、换设备登录同一个 Host 都还在；文件被手动改过也会在下次打开设置时同步。
 
 ## 开发
 
@@ -151,7 +163,7 @@ window.__ModuleLoader__.load({ id: 'dsh-answer-style', factory: (require) => { /
 ├── package.json          # dsh.bundle.patch + dsh.client 声明
 ├── cordis.patch.yml      # Host loader 行（id: answer-style）
 ├── lib/
-│   ├── index.js          # Host 半部（no-op）
+│   ├── index.js          # Host 半部：读写 answer-style.json 的路由
 │   └── client.js         # 浏览器半部：设置页 + 样式注入
 ├── scripts/smoke.mjs     # 零依赖自检
 ├── README.md / README.en.md
@@ -168,7 +180,7 @@ window.__ModuleLoader__.load({ id: 'dsh-answer-style', factory: (require) => { /
 
 - 只覆盖模型回答，界面其他部分不变；
 - 字体必须是本机已安装的字体，插件不打包字体文件，也不联网；
-- 偏好按浏览器保存，换浏览器或清空站点数据后回到默认；
+- 偏好保存在 Host 的 `~/.dsh/answer-style.json`，配置文件被删掉就回到默认；
 - 若 DSH 未来调整 `data-chat-flow-kind="assistant-step"` 或 CSS Modules 的 `_markdown_` 命名，需要同步修改 `lib/client.js` 中 `sheetText()` 的选择器。
 
 ## License
