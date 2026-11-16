@@ -2,9 +2,7 @@
 
 [中文](README.md) | English
 
-Restyle **only the model's answers** in DeepSeek Harness (DSH): **font family / body and heading weight / text color with an optional scope**, with a one-click reset.
-
-> Your own messages, tool rows, the composer and the sidebar keep the theme. The color applies to `**bold**` runs only — body text stays the theme color.
+Restyle **only the model's answers** in DeepSeek Harness (DSH): font family, body and heading weight, and the color of the runs you choose — with a one-click reset. Your messages, tool rows and the rest of the UI stay untouched.
 
 <p align="left">
   <a href="https://www.npmjs.com/package/dsh-answer-style"><img alt="npm" src="https://img.shields.io/npm/v/dsh-answer-style?style=flat-square&color=4c6ef5" /></a>
@@ -16,124 +14,69 @@ Restyle **only the model's answers** in DeepSeek Harness (DSH): **font family / 
 
 ## Screenshots
 
-| Settings panel | Font menu |
+| Settings | Font menu |
 | --- | --- |
 | <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/settings-panel.png" width="470" alt="Answer typography settings" /> | <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/font-menu.png" width="380" alt="Font menu" /> |
-
-
-## Why
-
-Interface-wide font settings also restyle the sidebar, buttons and composer. If all you want is a more comfortable *reading* experience for answers, or key conclusions to stand out, this plugin keeps the scope strictly on the assistant row.
 
 ## Features
 
 | Setting | What it does |
 | --- | --- |
-| Enable | Master switch; turning it off restores the theme instantly and keeps your preferences |
-| Font | Grouped presets: Chinese system fonts (Microsoft YaHei / PingFang / SimSun / KaiTi / SimHei), Latin system fonts (Segoe UI / Helvetica / Arial / Georgia / Times), monospace (Consolas / Menlo / Courier), and an explicitly labelled “install-it-yourself” group (Source Han Sans / LXGW WenKai / JetBrains Mono) · **Load installed fonts** · or type a custom `font-family` list |
-| Body weight | Default (theme) / 300 / 400 / 500 / 600 / 700, body blocks only |
-| Heading weight | Default (theme) / 400 / 500 / 600 / 700, h1–h6 on its own |
-| Text color | Preset swatches, the native color picker, or a typed `#1d4ed8` / `rgb(…)`; three chips choose the scope — `**bold**` runs, headings h1–h6, table headers (all on by default). Body text always keeps the theme color |
-| Reset | Clears every preference and removes the injected stylesheet |
+| Font | Grouped presets (Chinese system fonts, Latin system fonts, monospace, install-it-yourself open-source), the machine's installed fonts, or a custom `font-family` |
+| Weight | Body and headings h1–h6 separately, following the theme by default |
+| Color | Preset swatches, the native color picker, or a typed `#1d4ed8` / `rgb(…)`; pick which runs are colored: bold, headings, table headers |
+| Switch | Enable/disable instantly; “恢复默认” clears every preference and removes the injected stylesheet |
 
-- **Scope:** the assistant body of chat rows, including reasoning text, lists, tables and headings
-- **Live:** changes apply immediately, with a preview row at the bottom of the panel
-- **Persisted:** in the Host file `~/.dsh/answer-style.json` (`$DSH_HOME` wins), shared by every browser and by DSH Desktop; `localStorage` is only a first-paint cache
-- **Lightweight:** zero runtime dependencies, no build step, no bundled fonts, no network, no telemetry
+The scope is the answer body (reasoning text, lists and tables included). Changes apply live, and the preference lives on the Host, shared by every browser and by DSH Desktop.
 
 ## Install
 
 ```sh
-# npm
+# Web (recommended)
 dsh plugin --profile web add dsh-answer-style
 
-# GitHub
+# DSH Desktop
+dsh plugin --profile desktop add dsh-answer-style
+
+# or straight from GitHub
 dsh plugin --profile web add github:Luoqiaocong/dsh-answer-style
 ```
 
-Reload the page afterwards. If **Settings → 回答字体** is missing, restart `dsh web` (or DSH Desktop) once.
-
-Manual install: copy the package into `~/.dsh/profiles/web/node_modules/dsh-answer-style` and append to `~/.dsh/profiles/web/cordis.patch.yml`:
-
-```yaml
-- insert:
-    - id: answer-style
-      name: dsh-answer-style
-```
-
-### DSH Desktop
-
-```sh
-dsh plugin --profile desktop add dsh-answer-style
-```
-
-Electron has no `window.queryLocalFonts`, so “Load installed fonts” reports it as unavailable — type the family name instead. Preferences live in the Electron profile's own `localStorage`, independent from the browser.
+Reload the page afterwards; if **Settings → 回答字体** is missing, restart `dsh web` once. Manual installation: see the [development docs](docs/development.md).
 
 ## Usage
 
-Open **Settings → 回答字体**, pick a font (or load local fonts), adjust the overall weight, and choose a color for bold runs — blue `#1d4ed8`, for example. **Reset** restores the original look.
+1. Open **Settings → 回答字体**
+2. Pick a font, tune the body and heading weights, choose a color for the runs you want to stand out
+3. **Reset** restores the original look; “Follow theme” / “Default” restore one field at a time
 
 ## Compatibility
 
 | Item | Detail |
 | --- | --- |
-| Minimum DSH | `0.2.2-rc.1` (`dsh.engines.dsh`, enforced by the plugin manager) |
-| Version range | `0.2.x` |
-| Web GUI | modern Chrome / Edge / Firefox / Safari |
-| DSH Desktop | yes — install into the `desktop` profile |
+| DSH | `0.2.2-rc.1` or newer (`dsh.engines.dsh`), the `0.2.x` line |
+| Platform | Web (Chrome / Edge / Firefox / Safari) and DSH Desktop |
 | OS | Windows / macOS / Linux; fonts follow the machine |
-| Runtime dependencies | none |
+| Dependencies | none at runtime; no bundled fonts, no network, no telemetry |
 
 ## How it works
 
-The client half registers the `settings.section` slot and rebuilds a single stylesheet:
+- It only touches `[data-chat-flow-kind="assistant-step"]` — the assistant row — so user messages and UI chrome are unaffected;
+- Changes ride a single injected `<style>`; **reset removes it**, leaving nothing behind;
+- The preference is stored by the Host in `~/.dsh/answer-style.json` (`$DSH_HOME` wins), shared across browsers and Desktop;
+- Code blocks keep their own monospace font and color.
 
-```css
-[data-chat-flow-kind="assistant-step"] [class*="_markdown_"],
-[data-chat-flow-kind="assistant-step"] :is(p, li, blockquote, dd, dt, figcaption, th, td) {
-  font-family: "LXGW WenKai", serif !important;
-}
-
-/* heading weight, independent from the body */
-[data-chat-flow-kind="assistant-step"] :is(h1, h2, h3, h4, h5, h6) {
-  font-weight: 500 !important;
-}
-
-/* only the selected scope is colored (here: bold runs + table headers) */
-[data-chat-flow-kind="assistant-step"] :is(strong, b, th) {
-  color: #1d4ed8 !important;
-}
-```
-
-`[data-chat-flow-kind="assistant-step"]` is the stable anchor of one assistant answer row, so user messages and UI chrome are untouched. Code blocks keep their own monospace font and color. Reset simply removes the `<style>` element.
-
-## Development
-
-No build step: edit `lib/client.js` and replace the file in the profile. The repo ships a dependency-free self-check:
-
-```sh
-npm run check   # node --check + scripts/smoke.mjs
-```
-
-The browser bundle follows the DSH module-loader convention:
-
-```js
-window.__ModuleLoader__.load({ id: 'dsh-answer-style', factory: (require) => { /* … */ } })
-```
-
-Exporting `name` / `inject` / `apply(ctx)` is the standard Cordis client plugin face.
-
-## Safety
-
-- Font lists are sanitized (quotes, angle brackets, braces and control characters removed); colors accept only hex / `rgb()` / `rgba()` — no arbitrary CSS injection;
-- No conversation content is read or sent; only your local font/color preferences are stored in `localStorage`.
+Selectors, the config file and the Host route are documented in the [design notes](docs/design.md).
 
 ## Limits
 
-- Assistant answers only; the rest of the UI keeps the theme.
+- Assistant answers only;
 - Fonts must already be installed locally;
-- Preferences live in `~/.dsh/answer-style.json` on the Host; deleting that file restores the defaults;
-- If DSH later changes the `data-chat-flow-kind="assistant-step"` anchor or the `_markdown_` CSS-module naming, `sheetText()` in `lib/client.js` needs a matching tweak.
+- If DSH changes the chat anchor or the markdown class naming, the selectors in `lib/client.js` need a matching tweak.
+
+## Development
+
+No build step — edit `lib/client.js`; `npm run check` runs the syntax check and the dependency-free smoke test. Releases go through GitHub Actions on `v*` tags. See the [development docs](docs/development.md).
 
 ## License
 

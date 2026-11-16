@@ -2,9 +2,7 @@
 
 [English](README.en.md) | 中文
 
-给 **DeepSeek Harness（DSH）** 的模型回答单独换排版：**字体 / 正文与标题字重 / 文字颜色（可选上色范围）**，只改「模型说的话」，随时一键恢复默认。
-
-> 你的消息、工具行、输入框和侧边栏完全不受影响。颜色只施加在 `**加粗**` 片段上，正文继续跟随主题色。
+只改 **DeepSeek Harness（DSH）** 里「模型回答」的排版：字体、正文与标题字重、文字颜色（可选上色范围），随时一键恢复默认。你的消息、工具行和界面控件不受影响。
 
 <p align="left">
   <a href="https://www.npmjs.com/package/dsh-answer-style"><img alt="npm" src="https://img.shields.io/npm/v/dsh-answer-style?style=flat-square&color=4c6ef5" /></a>
@@ -20,176 +18,65 @@
 | --- | --- |
 | <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/settings-panel.png" width="470" alt="回答字体设置页" /> | <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/font-menu.png" width="380" alt="字体下拉列表" /> |
 
-
-## 为什么
-
-界面级的字体设置会同时作用于侧边栏、按钮和输入框。如果你只想让自己**读回答时**更舒服、或者让关键结论一眼可见，那需要的其实只是「回答本身」换字体、加粗内容换个颜色 —— 这个插件把作用域严格限制在模型回答的那一行。
-
 ## 功能
 
-| 设置项 | 说明 |
+| 设置 | 说明 |
 | --- | --- |
-| 启用 | 总开关。关掉立即恢复主题原样，偏好保留 |
-| 字体 | 分组预设：中文系统字体（微软雅黑 / 苹方 / 宋体 / 楷体 / 黑体）、西文系统字体（Segoe UI / Helvetica / Arial / Georgia / Times）、等宽（Consolas / Menlo / Courier）、以及标注为「需自行安装」的开源字体（思源黑体 / 霞鹜文楷 / JetBrains Mono）；也可「读取本机字体」枚举电脑上已装的全部字体，或「自定义…」直接写 `font-family` 列表 |
-| 正文粗细 | 默认（跟随主题）/ 300 / 400 / 500 / 600 / 700，只作用于正文块 |
-| 标题字重 | 默认（跟随主题）/ 400 / 500 / 600 / 700，单独控制 h1–h6 |
-| 文字颜色 | 预设色块、系统取色器或直接填 `#1d4ed8` / `rgb(…)`；三个胶囊按钮决定上色范围——`**加粗**` 片段 / 标题 h1–h6 / 表头，默认全开，普通正文始终保持主题色 |
-| 恢复默认 | 清空全部偏好并移除注入的样式，等价于从未设置过 |
+| 字体 | 分组预设：中文系统字体、西文系统字体、等宽、需自行安装的开源字体；也可读取本机已装字体，或自定义 `font-family` |
+| 字重 | 正文与标题 h1–h6 各自独立，默认跟随主题 |
+| 颜色 | 预设色块、系统取色器，或直接填 `#1d4ed8` / `rgb(…)`；上色范围可勾选：加粗片段、标题、表头 |
+| 开关 | 一键启用/停用；「恢复默认」清空全部偏好并移除注入样式 |
 
-- **作用范围**：聊天记录里模型回答的正文，含回答中的思考过程、列表、表格与标题
-- **不影响**：你的消息、工具行、输入框、侧边栏及其他界面控件
-- **即时生效**：设置面板背后的对话会同步变化，面板底部有实时预览
-- **持久化**：偏好写在 Host 的 `~/.dsh/answer-style.json`（设置了 `$DSH_HOME` 就用它），**所有浏览器与桌面端共用**；`localStorage` 只作首屏缓存与离线兜底
-- **轻量**：零运行时依赖、零构建、不打包字体、不联网、不采集数据
+作用范围是模型回答的正文（含思考过程、列表与表格），改动即时生效，偏好保存在 Host，所有浏览器与桌面端共用。
 
 ## 安装
 
-### npm（推荐）
-
 ```sh
+# Web（推荐）
 dsh plugin --profile web add dsh-answer-style
-```
 
-### GitHub
+# DSH Desktop
+dsh plugin --profile desktop add dsh-answer-style
 
-```sh
+# 或直接从 GitHub 装
 dsh plugin --profile web add github:Luoqiaocong/dsh-answer-style
 ```
 
-安装后**刷新页面**；如果设置里没有出现「回答字体」，重启一次 `dsh web`（或 DSH Desktop）。
-
-### 手动安装
-
-1. 把包放到 `~/.dsh/profiles/web/node_modules/dsh-answer-style`
-2. 在 `~/.dsh/profiles/web/cordis.patch.yml` 末尾追加：
-
-```yaml
-- insert:
-    - id: answer-style
-      name: dsh-answer-style
-```
-
-3. 刷新页面
-
-### DSH Desktop
-
-```sh
-dsh plugin --profile desktop add dsh-answer-style
-```
-
-手动安装同理：放进 `~/.dsh/profiles/desktop/node_modules/dsh-answer-style`，在
-`~/.dsh/profiles/desktop/cordis.patch.yml` 追加同一段 insert，然后重启 DSH Desktop。
+装完刷新页面；设置里没有「回答字体」就重启一次 `dsh web`。手动安装见 [开发文档](docs/development.md)。
 
 ## 使用
 
 1. 打开 **设置 → 回答字体**
-2. 选字体（或点「读取本机字体」）；分别调整正文与标题的字重；给需要强调的部分挑个颜色，例如蓝色 `#1d4ed8`
-3. 想回到原样，点 **恢复默认**；单项还原用「跟随主题」/「默认」即可
+2. 选字体、调正文与标题字重、给需要强调的部分挑颜色
+3. 想回到原样点「恢复默认」；单项还原用「跟随主题」/「默认」
 
 ## 兼容性
 
 | 项目 | 说明 |
 | --- | --- |
-| 最低 DSH 版本 | `0.2.2-rc.1`（写在 `dsh.engines.dsh`，插件管理器安装时会校验） |
-| 版本范围 | `0.2.x` 系列 |
-| Web GUI | Chrome / Edge / Firefox / Safari 等现代浏览器 |
-| DSH Desktop | 支持，安装到 `desktop` profile 即可（见上） |
-| 操作系统 | Windows / macOS / Linux，字体以本机已安装的为准 |
-| 运行时依赖 | 无 |
+| DSH | `0.2.2-rc.1` 及以上（写在 `dsh.engines.dsh`，安装时校验），`0.2.x` 系列 |
+| 平台 | Web（Chrome / Edge / Firefox / Safari）与 DSH Desktop |
+| 系统 | Windows / macOS / Linux，字体以本机已安装的为准 |
+| 依赖 | 无运行时依赖；不打包字体、不联网、不采集数据 |
 
 ## 原理
 
-客户端半部注册 `settings.section` 槽位，得到「回答字体」设置页；每次修改设置就重建一个 `<style id="dsh-answer-style-sheet">`：
+- 只作用于聊天中 `[data-chat-flow-kind="assistant-step"]` 这一行，所以用户消息与界面控件天然不受影响；
+- 改动通过一个 `<style>` 注入，**恢复默认 = 删除它**，不留残留；
+- 偏好由 Host 写在 `~/.dsh/answer-style.json`（设置了 `$DSH_HOME` 就用它），多浏览器与桌面端共用；
+- 代码块保留自己的等宽字体与颜色，不会被覆盖。
 
-```css
-/* 字体 */
-[data-chat-flow-kind="assistant-step"] [class*="_markdown_"],
-[data-chat-flow-kind="assistant-step"] :is(p, li, blockquote, dd, dt, figcaption, th, td) {
-  font-family: "霞鹜文楷", "LXGW WenKai", serif !important;
-}
-
-/* 正文粗细 */
-[data-chat-flow-kind="assistant-step"] [class*="_markdown_"],
-[data-chat-flow-kind="assistant-step"] :is(p, li, blockquote, dd, dt, figcaption, th, td) {
-  font-weight: 700 !important;
-}
-
-/* 标题字重（独立一档） */
-[data-chat-flow-kind="assistant-step"] :is(h1, h2, h3, h4, h5, h6) {
-  font-weight: 500 !important;
-}
-
-/* 只给勾选的范围上色（示例：加粗片段 + 表头，标题不参与） */
-[data-chat-flow-kind="assistant-step"] :is(strong, b, th) {
-  color: #1d4ed8 !important;
-}
-```
-
-- `[data-chat-flow-kind="assistant-step"]` 是聊天中「模型回答」那一行的稳定锚点，因此用户消息与界面控件天然不受影响；
-- `[class*="_markdown_"]` 命中 Markdown 正文根节点（CSS Modules 类名带哈希），并以块级元素兜底，流式输出时同样生效；
-- 代码块与行内代码有自己的等宽字体和颜色声明，不会被覆盖；
-- **恢复默认 = 移除这个 `<style>`**，不留任何残留。
-
-Host 半部（`lib/index.js`）提供两条能力：注册 `settings.section` 槽位所需的 loader 行，以及一个配置路由 `GET/PUT /answer-style/config`（不用 `/plugins/...`，那是客户端 bundle 专用前缀）。它读写：
-
-```
-~/.dsh/answer-style.json     # $DSH_HOME 优先
-{
-  "enabled": true,
-  "family": "\"LXGW WenKai\", serif",
-  "weight": "default",
-  "headingWeight": "500",
-  "color": "#1d4ed8",
-  "colorScope": { "strong": true, "headings": false, "headers": true }
-}
-```
-
-浏览器半部启动时拉一次、每次修改后再写回，所以换浏览器、换设备登录同一个 Host 都还在；文件被手动改过也会在下次打开设置时同步。
-
-## 开发
-
-无需构建，修改 `lib/client.js` 后在 profile 中替换同名文件即可。仓库自带零依赖自检：
-
-```sh
-npm run check   # node --check + scripts/smoke.mjs
-```
-
-`scripts/smoke.mjs` 用最小的 `window` / `document` / `react` 桩加载浏览器 bundle，断言注入的 CSS 选择器、颜色只命中勾选的范围、标题字重独立成条、偏好持久化与恢复默认。
-
-浏览器 bundle 遵循 DSH 的模块加载器约定：
-
-```js
-window.__ModuleLoader__.load({ id: 'dsh-answer-style', factory: (require) => { /* … */ } })
-```
-
-导出 `name` / `inject` / `apply(ctx)` 即为标准 Cordis 客户端插件面，`ctx.effect` 负责卸载时清理 `<style>` 与事件监听。
-
-## 目录结构
-
-```
-.
-├── package.json          # dsh.bundle.patch + dsh.client 声明
-├── cordis.patch.yml      # Host loader 行（id: answer-style）
-├── lib/
-│   ├── index.js          # Host 半部：读写 answer-style.json 的路由
-│   └── client.js         # 浏览器半部：设置页 + 样式注入
-├── scripts/smoke.mjs     # 零依赖自检
-├── README.md / README.en.md
-├── CHANGELOG.md
-└── LICENSE
-```
-
-## 安全
-
-- 自定义字体名会做清洗（去掉引号、尖括号、花括号与控制字符），颜色只接受 hex / `rgb()` / `rgba()`，不会把任意 CSS 注入页面；
-- 不读取、不发送任何对话内容；只有字体与颜色偏好写在本机 Host 的 `~/.dsh/answer-style.json`。
+实现细节（选择器、配置文件结构、配置路由）见 [设计说明](docs/design.md)。
 
 ## 限制
 
 - 只覆盖模型回答，界面其他部分不变；
-- 字体必须是本机已安装的字体，插件不打包字体文件，也不联网；
-- 偏好保存在 Host 的 `~/.dsh/answer-style.json`，配置文件被删掉就回到默认；
-- 若 DSH 未来调整 `data-chat-flow-kind="assistant-step"` 或 CSS Modules 的 `_markdown_` 命名，需要同步修改 `lib/client.js` 中 `sheetText()` 的选择器。
+- 字体必须是本机已安装的字体；
+- DSH 若调整聊天锚点或 Markdown 类名，需要同步改 `lib/client.js` 里的选择器。
+
+## 开发
+
+无需构建，改 `lib/client.js` 即可；`npm run check` 跑语法检查与零依赖冒烟测试。发布走 GitHub Actions（推 `v*` 标签）。详见 [开发文档](docs/development.md)。
 
 ## License
 

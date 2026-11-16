@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.5] - 2026-11-16
+
+### Changed
+
+- README rewritten around what a user needs: install, use, compatibility and a
+  four-bullet “how it works”. Selector/CSS/config details moved to
+  `docs/design.md`, the build and release workflow to `docs/development.md`.
+
 ## [0.2.4] - 2026-11-16
 
 First release published from CI with npm Trusted Publishing (GitHub OIDC);
