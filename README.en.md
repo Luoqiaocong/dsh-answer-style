@@ -23,7 +23,7 @@ Restyle **only the model's answers** in DeepSeek Harness (DSH): **font family / 
 
 ## Why
 
-DSH's built-in appearance settings change the whole interface at once — sidebar, buttons and composer included. Often you only want your *reading* of the answer to feel better, or the key conclusions to stand out. This plugin keeps the scope strictly on the assistant row.
+Interface-wide font settings also restyle the sidebar, buttons and composer. If all you want is a more comfortable *reading* experience for answers, or key conclusions to stand out, this plugin keeps the scope strictly on the assistant row.
 
 ## Features
 
@@ -101,17 +101,6 @@ The client half registers the `settings.section` slot and rebuilds a single styl
 
 `[data-chat-flow-kind="assistant-step"]` is the stable anchor of one assistant answer row, so user messages and UI chrome are untouched. Code blocks keep their own monospace font and color. Reset simply removes the `<style>` element.
 
-## Compared with font plugins
-
-| Plugin | Scope | Capability |
-| --- | --- | --- |
-| **dsh-answer-style** | assistant answers only | font + overall weight + bold color + reset |
-| [dsh-font](https://github.com/WangPaoPaoLab/dsh-font) | whole UI | 99 UI fonts + 31 code fonts |
-| [dsh-system-fonts](https://github.com/kira4094/dsh-system-fonts) | whole UI | enumerate installed fonts |
-| DSH built-in Appearance | whole UI | font size, font stacks |
-
-They complement each other and can be installed together.
-
 ## Development
 
 No build step: edit `lib/client.js` and replace the file in the profile. The repo ships a dependency-free self-check:
@@ -135,7 +124,7 @@ Exporting `name` / `inject` / `apply(ctx)` is the standard Cordis client plugin 
 
 ## Limits
 
-- Assistant answers only;
+- Assistant answers only; the rest of the UI keeps the theme.
 - Fonts must already be installed locally;
 - Preferences are per browser;
 - If DSH later changes the `data-chat-flow-kind="assistant-step"` anchor or the `_markdown_` CSS-module naming, `sheetText()` in `lib/client.js` needs a matching tweak.
