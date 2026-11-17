@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.7] - 2026-11-17
+
+Stable maintenance release, published from the pre-0.3 branch: it reverts the
+experimental dark-theme color adaptation so `latest` keeps the 0.2.5 behaviour.
+The experiment continues in `0.3.0-beta.1` (`@beta`) for anyone who needs it.
+
 ## [0.3.0-beta.1] - 2026-11-17
 
 ### Changed
