@@ -24,4 +24,11 @@ jobs:
       - name: Verify the bundle
         run: npm run check
       - name: Publish to npm
-        run: npm publish --provenance --access public
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          case "$VERSION" in
+            *-*) TAG=beta ;;
+            *)   TAG=latest ;;
+          esac
+          echo "publishing $VERSION to dist-tag $TAG"
+          npm publish --provenance --access public --tag "$TAG"

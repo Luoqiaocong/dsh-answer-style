@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.4.0-beta.2] - 2026-11-17
+
+### Fixed
+
+- The release workflow now derives the dist-tag from the version: prerelease
+  builds go to `beta`, stable builds to `latest` (npm refuses to publish a
+  prerelease without an explicit `--tag`).
+
 ## [0.4.0-beta.1] - 2026-11-17
 
 ### Added
