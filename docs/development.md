@@ -47,6 +47,18 @@ window.__ModuleLoader__.load({ id: 'dsh-answer-style', factory: (require) => { /
 
 3. 刷新页面。桌面端同理，把 `web` 换成 `desktop` 并重启 DSH Desktop。
 
+## 版本号规则
+
+| 线 | 版本形态 | dist-tag | 代码来源 |
+| --- | --- | --- | --- |
+| 稳定 | `0.A.B` | `latest` | `main` |
+| 实验 | `0.X.0-beta.N` | `beta` | `experimental/<主题>` 分支 |
+
+- 实验线的 minor 号独立递增，**不复用稳定线的号**：暗色实验用过 `0.3`，排版实验用 `0.4`；
+- 实验版本**永不推到 `latest`**：工作流按版本号里有没有 `-` 自动选 `beta` / `latest`；
+- 实验转正时，把分支合回 `main`，并在稳定线上发下一个 patch/minor；
+- 实验被放弃时，什么都不用做——它从没占过 `latest`，只是 `beta` 标签会指向新的实验版。
+
 ## 发布
 
 发布由 GitHub Actions 完成，使用 **npm Trusted Publishing**（GitHub OIDC），仓库里没有任何 npm token：
