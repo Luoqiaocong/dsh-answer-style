@@ -131,6 +131,19 @@ assert.match(
   'the color rule must cover bold runs, headings and table headers',
 )
 assert.doesNotMatch(sheet.textContent, /p, li[^}]*color:/, 'body text must keep the theme color')
+assert.match(
+  sheet.textContent,
+  /body\[data-ds-dark-theme\] \[data-chat-flow-kind="assistant-step"\] :is\([^)]*\) \{ color: color-mix\(in oklab, #1d4ed8 62%, white\) !important; \}/,
+  'dark theme must lighten the picked color by default',
+)
+
+face.update({ darkColor: '#e5e7eb' })
+assert.match(
+  document.getElementById(SHEET_ID).textContent,
+  /body\[data-ds-dark-theme\][^}]*color: #e5e7eb !important;/,
+  'an explicit dark color must win over the auto-adaptation',
+)
+face.update({ darkColor: '' })
 assert.equal(
   JSON.parse(localStorage.getItem(STORAGE_KEY)).family,
   '"LXGW WenKai", "Microsoft YaHei"',
@@ -169,6 +182,8 @@ assert.deepEqual(face.get(), {
   weight: 'default',
   headingWeight: 'default',
   color: '',
+  colorAutoAdapt: true,
+  darkColor: '',
   colorScope: { strong: true, headings: true, headers: true },
 })
 

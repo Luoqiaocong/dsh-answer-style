@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.2.6] - 2026-11-17
+
+### Added
+
+- Dark-theme aware text color: by default the picked color is lightened in the
+  dark palette (`color-mix(in oklab, <color> 62%, white)`), an explicit dark
+  color can be set instead, and the panel reports the contrast ratio of the
+  effective color against the current theme background.
+
 ## [0.2.5] - 2026-11-16
 
 ### Changed

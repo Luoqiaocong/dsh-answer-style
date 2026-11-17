@@ -1,6 +1,6 @@
 {
   "name": "dsh-answer-style",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "type": "module",
   "description": "DSH Web 插件：只改模型回答的字体、整体粗细与加粗文字颜色，配置保存在 Host 的 answer-style.json",
   "keywords": [
