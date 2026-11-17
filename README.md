@@ -2,6 +2,8 @@
 
 [English](README.en.md) | 中文
 
+> **实验版本 `0.4.0-beta.1`** —— 行高 / 段间距 / 表格美化属于实验特性，可能调整或移除，发布在 `beta` 标签。稳定版请用 `latest`（`0.2.7`）：`dsh plugin --profile web add dsh-answer-style`。
+
 只改 **DeepSeek Harness（DSH）** 里「模型回答」的排版：字体、正文与标题字重、文字颜色（可选上色范围），随时一键恢复默认。你的消息、工具行和界面控件不受影响。
 
 <p align="left">

@@ -2,6 +2,8 @@
 
 [中文](README.md) | English
 
+> **Experimental `0.4.0-beta.1`** — line height, paragraph spacing and table polish are experimental and may change or be removed; they ship on the `beta` tag. Stable is `latest` (`0.2.7`).
+
 Restyle **only the model's answers** in DeepSeek Harness (DSH): font family, body and heading weight, and the color of the runs you choose — with a one-click reset. Your messages, tool rows and the rest of the UI stay untouched.
 
 <p align="left">

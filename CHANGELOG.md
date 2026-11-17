@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.4.0-beta.1] - 2026-11-17
+
+### Added
+
+- **行高 / 段间距**：回答正文的行高与段落间距可单独设置，选「默认」即跟随主题。
+- **表格美化**：隔行底色、紧凑内边距、数字等宽（`tabular-nums`）三个独立开关。
+
+> 实验版本：以上特性可能调整或移除，只发布在 `beta` 标签；稳定线仍是 `0.2.7`（`latest`）。
+
 ## [0.2.7] - 2026-11-17
 
 ### Changed

@@ -155,6 +155,20 @@ assert.match(scoped, /:is\(strong, b, th\) \{ color: #1d4ed8 !important; \}/, 'c
 assert.doesNotMatch(scoped, /strong, b, h1/, 'headings must be gone from the color target list')
 face.update({ colorScope: { headings: true } })
 
+// Typography spacing and table polish are independent switches.
+face.update({ lineHeight: 28, paragraphGap: 20 })
+let spacing = document.getElementById(SHEET_ID).textContent
+assert.match(spacing, /line-height: 28px !important;/, 'line height rule missing')
+assert.match(spacing, /margin-top: 20px !important; margin-bottom: 20px !important;/, 'paragraph gap rule missing')
+
+face.update({ tableZebra: true, tableCompact: true, tableNums: true })
+spacing = document.getElementById(SHEET_ID).textContent
+assert.match(spacing, /tbody tr:nth-child\(even\)/, 'zebra rule missing')
+assert.match(spacing, /padding: 6px 10px !important;/, 'compact padding missing')
+assert.match(spacing, /font-variant-numeric: tabular-nums !important;/, 'tabular numbers missing')
+
+face.update({ lineHeight: 0, paragraphGap: 0, tableZebra: false, tableCompact: false, tableNums: false })
+
 face.update({ enabled: false })
 assert.equal(document.getElementById(SHEET_ID), null, 'disabling must remove the stylesheet')
 face.update({ enabled: true })
@@ -170,6 +184,11 @@ assert.deepEqual(face.get(), {
   headingWeight: 'default',
   color: '',
   colorScope: { strong: true, headings: true, headers: true },
+  lineHeight: 0,
+  paragraphGap: 0,
+  tableZebra: false,
+  tableCompact: false,
+  tableNums: false,
 })
 
 console.log('smoke: ok')
