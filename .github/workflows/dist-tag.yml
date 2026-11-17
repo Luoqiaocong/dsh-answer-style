@@ -1,0 +1,30 @@
+name: dist-tag
+
+# Move a dist-tag (for example `latest`) onto an already published version.
+# Push a tag named `retag-<dist-tag>-<version>`:
+#   retag-latest-0.2.5   →  latest   := 0.2.5
+#   retag-beta-1.0.0-rc.1 →  beta    := 1.0.0-rc.1
+on:
+  push:
+    tags: ['retag-*']
+
+jobs:
+  retag:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Move the dist-tag
+        run: |
+          NAME="${GITHUB_REF_NAME#retag-}"
+          TAG="${NAME%%-*}"
+          VERSION="${NAME#*-}"
+          echo "moving dist-tag '$TAG' to dsh-answer-style@$VERSION"
+          npm dist-tag add "dsh-answer-style@$VERSION" "$TAG"
+          npm dist-tag ls dsh-answer-style
