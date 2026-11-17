@@ -46,31 +46,6 @@ Markdown 正文根节点的类名由 CSS Modules 生成、带哈希（形如 `_m
 
 **恢复默认 = 移除这个 `<style>`**，页面上不留任何残留；插件被卸载时同样由 `ctx.effect` 清理。
 
-## 暗色适配
-
-选了颜色后注入两条规则：亮色主题一条，暗色主题一条：
-
-```css
-/* 亮色 */
-[data-chat-flow-kind="assistant-step"] :is(strong, b) {
-  color: #1d4ed8 !important;
-}
-
-/* 暗色：默认自动提亮（62% 原色 + 38% 白） */
-body[data-ds-dark-theme] [data-chat-flow-kind="assistant-step"] :is(strong, b) {
-  color: color-mix(in oklab, #1d4ed8 62%, white) !important;
-}
-
-/* 暗色：设置了单独颜色时直接用它 */
-body[data-ds-dark-theme] [data-chat-flow-kind="assistant-step"] :is(strong, b) {
-  color: #93c5fd !important;
-}
-```
-
-优先级：`darkColor`（单独颜色）> `colorAutoAdapt`（自动提亮）> 与亮色相同。
-
-设置面板用 `getComputedStyle(body).backgroundColor` 取当前背景，算 WCAG 对比度，低于 4.5:1 会提示「偏低」。`data-ds-dark-theme` 由 `ui-layout` 的 ThemePresenter 写在 `body` 上，组件用 `MutationObserver` 监听它变化。
-
 ## 配置：Host 文件，不是浏览器缓存
 
 偏好由 Host 半部写进
@@ -86,8 +61,6 @@ body[data-ds-dark-theme] [data-chat-flow-kind="assistant-step"] :is(strong, b) {
   "weight": "default",
   "headingWeight": "500",
   "color": "#1d4ed8",
-  "colorAutoAdapt": true,
-  "darkColor": "",
   "colorScope": { "strong": true, "headings": false, "headers": true }
 }
 ```

@@ -24,7 +24,7 @@ Restyle **only the model's answers** in DeepSeek Harness (DSH): font family, bod
 | --- | --- |
 | Font | Grouped presets (Chinese system fonts, Latin system fonts, monospace, install-it-yourself open-source), the machine's installed fonts, or a custom `font-family` |
 | Weight | Body and headings h1–h6 separately, following the theme by default |
-| Color | Preset swatches, the native color picker, or a typed `#1d4ed8` / `rgb(…)`; choose which runs are colored (bold, headings, table headers). |
+| Color | Preset swatches, the native color picker, or a typed `#1d4ed8` / `rgb(…)`; pick which runs are colored: bold, headings, table headers |
 | Switch | Enable/disable instantly; “恢复默认” clears every preference and removes the injected stylesheet |
 
 The scope is the answer body (reasoning text, lists and tables included). Changes apply live, and the preference lives on the Host, shared by every browser and by DSH Desktop.
@@ -43,14 +43,6 @@ dsh plugin --profile web add github:Luoqiaocong/dsh-answer-style
 ```
 
 Reload the page afterwards; if **Settings → 回答字体** is missing, restart `dsh web` once. Manual installation: see the [development docs](docs/development.md).
-
-> `latest` is the stable **0.2.7** line (same features as 0.2.5). The **experimental** `0.3.0-beta.1` adds dark-theme color adaptation and may be changed or removed, so it lives on the `beta` tag:
->
-> ```sh
-> dsh plugin --profile web add dsh-answer-style@beta
-> ```
->
-> Install it only if you actually need the dark-background readability.
 
 ## Usage
 

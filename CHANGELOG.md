@@ -6,30 +6,11 @@ All notable changes to this project are documented here. The format follows
 
 ## [0.2.7] - 2026-11-17
 
-Stable maintenance release, published from the pre-0.3 branch: it reverts the
-experimental dark-theme color adaptation so `latest` keeps the 0.2.5 behaviour.
-The experiment continues in `0.3.0-beta.1` (`@beta`) for anyone who needs it.
-
-## [0.3.0-beta.1] - 2026-11-17
-
 ### Changed
 
-- The dark-theme color work is renumbered as a **prerelease**: the feature is
-  experimental and may be removed in a later release, so it ships on the
-  `beta` dist-tag instead of `latest`. `npm i dsh-answer-style` keeps resolving
-  the stable line; `npm i dsh-answer-style@beta` opts in.
-
-## [0.2.6] - 2026-11-17
-
-> Published to `latest` by mistake — the dark-theme color adaptation it
-> carries is experimental. Superseded by `0.3.0-beta.1` on the `beta` tag.
-
-### Added
-
-- Dark-theme aware text color: by default the picked color is lightened in the
-  dark palette (`color-mix(in oklab, <color> 62%, white)`), an explicit dark
-  color can be set instead, and the panel reports the contrast ratio of the
-  effective color against the current theme background.
+- Reverted the experimental dark-theme color adaptation that `0.2.6` shipped to
+  `latest` by mistake. The stable line is feature-for-feature identical to
+  `0.2.5`; the experiment continues on `0.3.0-beta.1` (`@beta`).
 
 ## [0.2.5] - 2026-11-16
 
