@@ -64,7 +64,9 @@ window.__ModuleLoader__.load({ id: 'dsh-answer-style', factory: (require) => { /
 
 **预发布版本**：版本号带 `-beta.1` 这类后缀时，工作流会自动发到 `beta` 标签（不是 `latest`），`npm i` 的普通用户不受影响；想尝鲜用 `npm i dsh-answer-style@beta`。实验性、可能被撤销的功能一律走这条线，不要占用 `latest`。
 
-**稳定线维护**：如果某个实验版本误占 `latest`，不要靠改 dist-tag 补救（Trusted Publishing 的 OIDC 权限只覆盖 publish，`npm dist-tag` 会 401）。正确做法是从稳定提交拉一个分支，把版本号 +1 发一个稳定补丁版，`latest` 自然回到稳定线——`0.2.7` 就是这么发的。
+**稳定线维护**：如果某个实验版本误占 `latest`，不要靠改 dist-tag 补救（Trusted Publishing 的 OIDC 权限只覆盖 publish，`npm dist-tag` 会 401）。正确做法是从稳定提交拉一个分支，把版本号 +1 发一个稳定补丁版，`latest` 自然回到稳定线——`0.2.7` 就是这么发的（分支 `stable-0.2.7`）。
+
+> 刚发布的一两分钟内，tarball 可能返回 404（npm 的边缘缓存先记了 404），加个查询串如 `?x=1` 能拿到 200，说明文件其实已就位；等几分钟再用 `npm install` 验证，别急着当发布失败处理。
 
 npm 页面上的 Trusted Publisher 需要一次性配置：owner `Luoqiaocong`、repository `dsh-answer-style`、workflow `publish.yml`、权限 **`npm publish`**（不是 `npm stage publish`，后者只能进暂存区）。
 
