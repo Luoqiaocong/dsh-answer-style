@@ -62,6 +62,8 @@ window.__ModuleLoader__.load({ id: 'dsh-answer-style', factory: (require) => { /
 3. `.github/workflows/publish.yml` 会跑 `npm run check`，然后 `npm publish --provenance --access public`；
 4. 跑完核对：`npm view dsh-answer-style version dist-tags`。
 
+**预发布版本**：版本号带 `-beta.1` 这类后缀时，工作流会自动发到 `beta` 标签（不是 `latest`），`npm i` 的普通用户不受影响；想尝鲜用 `npm i dsh-answer-style@beta`。实验性、可能被撤销的功能一律走这条线，不要占用 `latest`。
+
 npm 页面上的 Trusted Publisher 需要一次性配置：owner `Luoqiaocong`、repository `dsh-answer-style`、workflow `publish.yml`、权限 **`npm publish`**（不是 `npm stage publish`，后者只能进暂存区）。
 
 > 标签触发只对**新标签**生效：删除后重新推同一个标签名不会再次触发工作流。

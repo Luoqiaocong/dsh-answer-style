@@ -24,7 +24,7 @@ Restyle **only the model's answers** in DeepSeek Harness (DSH): font family, bod
 | --- | --- |
 | Font | Grouped presets (Chinese system fonts, Latin system fonts, monospace, install-it-yourself open-source), the machine's installed fonts, or a custom `font-family` |
 | Weight | Body and headings h1–h6 separately, following the theme by default |
-| Color | Preset swatches, the native color picker, or a typed `#1d4ed8` / `rgb(…)`; choose which runs are colored (bold, headings, table headers). In the dark palette the color is lightened automatically, an explicit dark color can be set instead, and the panel shows the contrast ratio |
+| Color | Preset swatches, the native color picker, or a typed `#1d4ed8` / `rgb(…)`; choose which runs are colored (bold, headings, table headers). In the dark palette the color is lightened automatically, an explicit dark color can be set instead, and the panel shows the contrast ratio (**experimental** — may change or be removed) |
 | Switch | Enable/disable instantly; “恢复默认” clears every preference and removes the injected stylesheet |
 
 The scope is the answer body (reasoning text, lists and tables included). Changes apply live, and the preference lives on the Host, shared by every browser and by DSH Desktop.
