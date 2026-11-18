@@ -14,9 +14,13 @@
 
 ## 截图
 
+<img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/font-compare.png" width="900" alt="默认效果与思源宋体加蓝色/棕色加粗的对比" />
+
+左边保持默认，右边换成思源宋体、标题加粗、只给加粗片段上色（蓝 `#1d4ed8` / 棕 `#b45309`）。
+
 | 设置页 | 字体下拉 |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/settings-panel.png" width="470" alt="回答字体设置页" /> | <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/font-menu.png" width="380" alt="字体下拉列表" /> |
+| <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/settings-panel.png" width="440" alt="回答字体设置页" /> | <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/font-menu.png" width="360" alt="字体下拉列表" /> |
 
 ## 功能
 

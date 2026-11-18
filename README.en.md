@@ -14,9 +14,13 @@ Restyle **only the model's answers** in DeepSeek Harness (DSH): font family, bod
 
 ## Screenshots
 
+<img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/font-compare.png" width="900" alt="Default vs Noto Serif SC with blue and brown bold runs" />
+
+Default on the left; on the right the same answer in Noto Serif SC with bolder headings and only the bold runs colored (blue `#1d4ed8` / brown `#b45309`).
+
 | Settings | Font menu |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/settings-panel.png" width="470" alt="Answer typography settings" /> | <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/font-menu.png" width="380" alt="Font menu" /> |
+| <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/settings-panel.png" width="440" alt="Answer typography settings" /> | <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/font-menu.png" width="360" alt="Font menu" /> |
 
 ## Features
 
