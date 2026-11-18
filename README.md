@@ -12,7 +12,7 @@
   <img alt="network" src="https://img.shields.io/badge/network-none-lightgrey?style=flat-square" />
 </p>
 
-> 已上线 [dsh-market](https://github.com/dsh-market/dsh-market) 插件市场，搜索「回答字体」即可安装 · [列表页](https://awesome-dsh-plugin.com/p/Luoqiaocong/dsh-answer-style/)
+> 已上线 [dsh-market](https://github.com/dsh-market/dsh-market) 插件市场，搜索 `dsh-answer-style` 即可安装 · [列表页](https://awesome-dsh-plugin.com/p/Luoqiaocong/dsh-answer-style/)
 
 ## 截图
 
