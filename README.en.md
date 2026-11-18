@@ -12,6 +12,8 @@ Restyle **only the model's answers** in DeepSeek Harness (DSH): font family, bod
   <img alt="network" src="https://img.shields.io/badge/network-none-lightgrey?style=flat-square" />
 </p>
 
+> Listed in the [dsh-market](https://github.com/dsh-market/dsh-market) plugin market — search “回答字体” · [listing](https://awesome-dsh-plugin.com/p/Luoqiaocong/dsh-answer-style/)
+
 ## Screenshots
 
 <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/font-compare.png" width="900" alt="Default vs Noto Serif SC with blue and brown bold runs" />

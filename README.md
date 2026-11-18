@@ -12,6 +12,8 @@
   <img alt="network" src="https://img.shields.io/badge/network-none-lightgrey?style=flat-square" />
 </p>
 
+> 已上线 [dsh-market](https://github.com/dsh-market/dsh-market) 插件市场，搜索「回答字体」即可安装 · [列表页](https://awesome-dsh-plugin.com/p/Luoqiaocong/dsh-answer-style/)
+
 ## 截图
 
 <img src="https://raw.githubusercontent.com/Luoqiaocong/dsh-answer-style/main/docs/screenshots/font-compare.png" width="900" alt="默认效果与思源宋体加蓝色/棕色加粗的对比" />
