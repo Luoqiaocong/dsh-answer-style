@@ -94,6 +94,7 @@ assert.equal(typeof exportsObject.apply, 'function')
 
 let registered
 const effects = []
+let registeredIcon = null
 const ctx = {
   effect(fn, label) {
     const disposer = fn()
@@ -101,8 +102,15 @@ const ctx = {
     return typeof disposer === 'function' ? disposer : () => {}
   },
   slots: {
-    inject: (name, factory) => { assert.equal(name, 'settings.section'); return factory() },
-    register: (options, component) => { registered = { options, component }; return () => {} },
+    inject: (name, factory) => {
+      assert.ok(name === 'settings.section' || name === 'settings.section.icon', name)
+      return factory()
+    },
+    register: (options, component) => {
+      if (options.name === 'settings.section.icon') registeredIcon = { options, component }
+      else registered = { options, component }
+      return () => {}
+    },
   },
 }
 
@@ -110,6 +118,9 @@ exportsObject.apply(ctx)
 assert.ok(registered, 'settings.section was not registered')
 assert.equal(registered.options.id, 'answer-style')
 assert.equal(registered.options.label(), '回答字体')
+assert.ok(registeredIcon, 'settings navigation icon was not registered')
+assert.equal(registeredIcon.options.id, 'answer-style')
+assert.deepEqual(registeredIcon.component({ size: 16, active: false }).children, ['文'])
 assert.equal(document.getElementById(SHEET_ID), null, 'defaults must not inject a stylesheet')
 
 const face = registered.options.inject()
